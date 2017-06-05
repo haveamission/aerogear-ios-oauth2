@@ -33,13 +33,17 @@ open class KeycloakOAuth2Module: OAuth2Module {
         }
 
         let paramDict: [String:String] = [ "client_id": config.clientId, "refresh_token": self.oauth2Session.refreshToken!]
+        
+        
         http.request(method: .post, path: revokeTokenEndpoint, parameters: paramDict as [String : AnyObject]?, completionHandler: { (response, error) in
+            self.oauth2Session.clearTokens()
+            
             if (error != nil) {
                 completionHandler(nil, error)
                 return
             }
 
-            self.oauth2Session.clearTokens()
+         
             completionHandler(response as AnyObject?, nil)
         })
     }
