@@ -82,6 +82,12 @@ open class Config {
     }
 
     /**
+     Append additional query params when making request for authorization code
+     */
+    open var extraAuthorizationCodeRequestParams: String?
+    
+
+    /**
     Applies the "client id" obtained with the client registration process.
     */
     open let clientId: String
@@ -127,7 +133,7 @@ open class Config {
         UIApplication.shared.keyWindow?.rootViewController?.present(webView, animated: true, completion: nil)
     }
 
-    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, webView: WebViewType = WebViewType.externalSafari) {
+    public init(base: String, authzEndpoint: String, redirectURL: String, accessTokenEndpoint: String, clientId: String, audienceId: String? = nil, extraAuthorizationCodeRequestParams: String? = nil, refreshTokenEndpoint: String? = nil, revokeTokenEndpoint: String? = nil, isOpenIDConnect: Bool = false, userInfoEndpoint: String? = nil, scopes: [String] = [],  clientSecret: String? = nil, accountId: String? = nil, webView: WebViewType = WebViewType.externalSafari) {
         self.baseURL = base
         self.authzEndpoint = authzEndpoint
         self.redirectURL = redirectURL
@@ -140,6 +146,7 @@ open class Config {
         self.clientId = clientId
         self.clientSecret = clientSecret
         self.audienceId = audienceId
+        self.extraAuthorizationCodeRequestParams = extraAuthorizationCodeRequestParams
         self.accountId = accountId
         self.webView = webView
     }

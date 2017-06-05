@@ -105,6 +105,8 @@ open class OAuth2Module: AuthzModule {
             if ( self.webView != nil && !self.customDismiss) {
                 UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
             }
+            
+            
         })
 
         // register to receive notification when the application becomes active so we
@@ -131,6 +133,10 @@ open class OAuth2Module: AuthzModule {
             params = "\(params)&audience=\(audienceId)"
         }
 
+        if let extraParams = config.extraAuthorizationCodeRequestParams {
+            params = "\(params)&\(extraParams)"
+        }
+        
         guard let computedUrl = http.calculateURL(baseURL: config.baseURL, url: config.authzEndpoint) else {
             let error = NSError(domain:AGAuthzErrorDomain, code:0, userInfo:["NSLocalizedDescriptionKey": "Malformatted URL."])
             completionHandler(nil, error)
